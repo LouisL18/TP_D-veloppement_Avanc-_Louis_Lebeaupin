@@ -1,27 +1,41 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Player = void 0;
-class Player {
-    constructor(elo) {
-        this.id = Player.nextId++;
-        this.elo = elo !== undefined ? elo : Player.calculateInitialElo();
-        Player.players.push(this);
-    }
-    static calculateInitialElo() {
-        if (Player.players.length === 0) {
-            return 400;
-        }
-        const totalElo = Player.players.reduce((sum, player) => sum + player.elo, 0);
-        return totalElo / Player.players.length;
-    }
-    updateElo(newElo) {
-        this.elo = newElo;
-    }
-    static getAllPlayers() {
-        return Player.players;
-    }
-}
+const typeorm_1 = require("typeorm");
+const match_entity_1 = require("../match/match.entity");
+let Player = class Player {
+};
 exports.Player = Player;
-Player.players = [];
-Player.nextId = 1;
+__decorate([
+    (0, typeorm_1.PrimaryColumn)(),
+    __metadata("design:type", String)
+], Player.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 1000 }),
+    __metadata("design:type", Number)
+], Player.prototype, "elo", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 1000 }),
+    __metadata("design:type", Number)
+], Player.prototype, "rank", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => match_entity_1.Match, (match) => match.winner),
+    __metadata("design:type", Array)
+], Player.prototype, "wins", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => match_entity_1.Match, (match) => match.loser),
+    __metadata("design:type", Array)
+], Player.prototype, "losses", void 0);
+exports.Player = Player = __decorate([
+    (0, typeorm_1.Entity)()
+], Player);
 //# sourceMappingURL=player.entity.js.map

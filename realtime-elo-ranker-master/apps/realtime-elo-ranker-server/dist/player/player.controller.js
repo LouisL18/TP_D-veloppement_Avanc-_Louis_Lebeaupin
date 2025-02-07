@@ -15,43 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerController = void 0;
 const common_1 = require("@nestjs/common");
 const player_service_1 = require("./player.service");
-const player_entity_1 = require("./player.entity");
 let PlayerController = class PlayerController {
     constructor(playerService) {
         this.playerService = playerService;
     }
-    createPlayer(elo) {
-        return this.playerService.createPlayer(elo);
-    }
-    getAllPlayers() {
-        return this.playerService.getAllPlayers();
-    }
-    updatePlayerElo(id, newElo) {
-        return this.playerService.updatePlayerElo(id, newElo);
+    async createPlayer(id) {
+        return this.playerService.createPlayer(id);
     }
 };
 exports.PlayerController = PlayerController;
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)('elo')),
+    __param(0, (0, common_1.Body)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", player_entity_1.Player)
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
 ], PlayerController.prototype, "createPlayer", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
-], PlayerController.prototype, "getAllPlayers", null);
-__decorate([
-    (0, common_1.Put)(':id/elo'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)('elo')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", player_entity_1.Player)
-], PlayerController.prototype, "updatePlayerElo", null);
 exports.PlayerController = PlayerController = __decorate([
     (0, common_1.Controller)('api/player'),
     __metadata("design:paramtypes", [player_service_1.PlayerService])

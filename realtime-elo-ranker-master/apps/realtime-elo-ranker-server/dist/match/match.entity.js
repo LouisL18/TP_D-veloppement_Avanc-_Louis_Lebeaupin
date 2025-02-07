@@ -1,33 +1,41 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Match = void 0;
-class Match {
-    constructor(player1, player2, result) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.result = result;
-        this.updateElo();
-    }
-    updateElo() {
-        const K = 32;
-        const expectedScore1 = 1 / (1 + Math.pow(10, (this.player2.elo - this.player1.elo) / 400));
-        const expectedScore2 = 1 / (1 + Math.pow(10, (this.player1.elo - this.player2.elo) / 400));
-        let score1, score2;
-        if (this.result === 'win') {
-            score1 = 1;
-            score2 = 0;
-        }
-        else if (this.result === 'lose') {
-            score1 = 0;
-            score2 = 1;
-        }
-        else {
-            score1 = 0.5;
-            score2 = 0.5;
-        }
-        this.player1.updateElo(this.player1.elo + K * (score1 - expectedScore1));
-        this.player2.updateElo(this.player2.elo + K * (score2 - expectedScore2));
-    }
-}
+const typeorm_1 = require("typeorm");
+const player_entity_1 = require("../player/player.entity");
+let Match = class Match {
+};
 exports.Match = Match;
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], Match.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => player_entity_1.Player, { nullable: true }),
+    __metadata("design:type", Object)
+], Match.prototype, "winner", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => player_entity_1.Player, { nullable: true }),
+    __metadata("design:type", Object)
+], Match.prototype, "loser", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], Match.prototype, "draw", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Date)
+], Match.prototype, "date", void 0);
+exports.Match = Match = __decorate([
+    (0, typeorm_1.Entity)()
+], Match);
 //# sourceMappingURL=match.entity.js.map

@@ -93,11 +93,7 @@ export default function Home() {
       if (event.type === RankingEventType.RankingUpdate) {
         updateLadderData(event.player);
       }
-    };
-    eventSource.onerror = (err) => {
-      // TODO: toast error
-      console.error(err);
-      eventSource.close();
+
     };
     return () => eventSource.close();
   }, [API_BASE_URL, updateLadderData]);

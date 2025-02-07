@@ -1,10 +1,8 @@
+import { Match } from '../match/match.entity';
 export declare class Player {
-    private static players;
-    private static nextId;
-    id: number;
+    id: string;
     elo: number;
-    constructor(elo?: number);
-    private static calculateInitialElo;
-    updateElo(newElo: number): void;
-    static getAllPlayers(): Player[];
+    rank: number;
+    wins: Match[];
+    losses: Match[];
 }

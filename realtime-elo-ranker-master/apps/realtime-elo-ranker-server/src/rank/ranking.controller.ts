@@ -7,12 +7,12 @@ export class RankingController {
   constructor(private readonly rankingService: RankingService) {}
 
   @Get()
-  getRanking(): Player[] {
+  async getRanking(): Promise<Player[]> {
     return this.rankingService.getRanking();
   }
 
   @Get(':id')
-  getPlayerRanking(@Param('id') id: number): number {
+  async getPlayerRanking(@Param('id') id: string): Promise<string> {
     return this.rankingService.getPlayerRanking(id);
   }
 }

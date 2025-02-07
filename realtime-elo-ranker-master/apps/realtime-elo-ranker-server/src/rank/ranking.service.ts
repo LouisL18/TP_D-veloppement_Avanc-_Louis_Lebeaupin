@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { Player } from '../player/player.entity';
+import { PlayerService } from '../player/player.service';
 
 @Injectable()
 export class RankingService {
-  getRanking(): Player[] {
-    return Player.getAllPlayers().sort((a, b) => b.elo - a.elo);
+  constructor(private readonly playerService: PlayerService) {}
+
+  async getRanking(): Promise<Player[]> {
+    const players = await this.playerService.getAllPlayers();
+    return players.sort((a, b) => b.elo - a.elo);
   }
 
-  getPlayerRanking(playerId: number): number {
-    const ranking = this.getRanking();
-    const playerIndex = ranking.findIndex(player => player.id === playerId);
-    return playerIndex !== -1 ? playerIndex + 1 : -1;
+  async getPlayerRanking(playerId: string): Promise<string> {
+    const ranking = await this.getRanking();
+    const player = ranking.find(player => player.id === playerId);
+    if (!player) {
+      return 'Player not found';
+    }
+    const index = ranking.indexOf(player);
+    return `Player ${player.id} is ranked ${index + 1} with ${player.elo} points`;
+    
   }
 }

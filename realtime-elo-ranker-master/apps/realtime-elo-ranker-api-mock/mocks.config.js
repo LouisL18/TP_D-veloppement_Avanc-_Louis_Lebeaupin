@@ -10,10 +10,19 @@ module.exports = {
     //allowUnknownArguments: false,
   },
   plugins: {
-    // Plugins to be registered
-    //register: [],
-    proxyRoutesHandler: {
+    cors: {
+      enabled: true,
+      options: {
+        origin: '*', // Vous pouvez spécifier des origines spécifiques, par exemple ['http://localhost:3000']
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 204, // Cela définit le statut de la réponse pour les requêtes OPTIONS
+      },
     },
+  },
+  proxyRoutesHandler: {
+    // Ajouter vos routes proxy ici si nécessaire
+  }
     adminApi: {
       // Port number for the admin API server to be listening at
       //port: 3110,
@@ -55,7 +64,7 @@ module.exports = {
   },
   server: {
     // Port number for the server to be listening at
-    port: 8080,
+    port: 3000,
     // Host for the server
     //host: "0.0.0.0",
     cors: {

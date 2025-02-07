@@ -19,10 +19,10 @@ let RankingController = class RankingController {
     constructor(rankingService) {
         this.rankingService = rankingService;
     }
-    getRanking() {
+    async getRanking() {
         return this.rankingService.getRanking();
     }
-    getPlayerRanking(id) {
+    async getPlayerRanking(id) {
         return this.rankingService.getPlayerRanking(id);
     }
 };
@@ -31,14 +31,14 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], RankingController.prototype, "getRanking", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Number)
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
 ], RankingController.prototype, "getPlayerRanking", null);
 exports.RankingController = RankingController = __decorate([
     (0, common_1.Controller)('api/ranking'),

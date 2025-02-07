@@ -1,7 +1,30 @@
+import { PlayerService } from '../player/player.service';
 import { MatchService } from './match.service';
-import { Match } from './match.entity';
 export declare class MatchController {
+    private readonly playerService;
     private readonly matchService;
-    constructor(matchService: MatchService);
-    createMatch(player1Id: number, player2Id: number, result: 'win' | 'lose' | 'draw'): Match;
+    constructor(playerService: PlayerService, matchService: MatchService);
+    publishMatchResult(matchResult: {
+        winner: string;
+        loser: string;
+        draw: boolean;
+    }): Promise<{
+        ok: boolean;
+        code: number;
+        message: string;
+        winner?: undefined;
+        loser?: undefined;
+    } | {
+        ok: boolean;
+        code: number;
+        winner: {
+            id: string;
+            rank: number;
+        };
+        loser: {
+            id: string;
+            rank: number;
+        };
+        message?: undefined;
+    }>;
 }

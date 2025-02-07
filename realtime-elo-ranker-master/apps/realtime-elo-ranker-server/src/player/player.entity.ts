@@ -1,29 +1,21 @@
+import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import { Match } from '../match/match.entity';
+
+@Entity()
 export class Player {
-    private static players: Player[] = [];
-    private static nextId = 1;
-  
-    public id: number;
-    public elo: number;
-  
-    constructor(elo?: number) {
-      this.id = Player.nextId++;
-      this.elo = elo !== undefined ? elo : Player.calculateInitialElo();
-      Player.players.push(this);
-    }
-  
-    private static calculateInitialElo(): number {
-      if (Player.players.length === 0) {
-        return 400;
-      }
-      const totalElo = Player.players.reduce((sum, player) => sum + player.elo, 0);
-      return totalElo / Player.players.length;
-    }
-  
-    public updateElo(newElo: number): void {
-      this.elo = newElo;
-    }
-  
-    public static getAllPlayers(): Player[] {
-      return Player.players;
-    }
-  }
+  // je veux que ce sois moi qui donne l'id
+  @PrimaryColumn()
+  id: string;
+
+  @Column({ default: 1000 })
+  elo: number;
+
+  @Column({ default: 1000 })
+  rank: number;
+
+  @OneToMany(() => Match, (match) => match.winner)
+  wins: Match[];
+
+  @OneToMany(() => Match, (match) => match.loser)
+  losses: Match[];
+}

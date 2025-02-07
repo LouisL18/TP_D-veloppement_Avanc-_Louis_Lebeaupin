@@ -69,7 +69,7 @@ Le serveur est en hot-reload : les modifications apportées au `swagger.yaml` se
 pnpm run apps:api-mock:start
 ```
 
-Le mock de l'API sera accessible à l'adresse `http://localhost:8080`. Il ne doit pas être lancé en même temps que le serveur de l'application.
+Le mock de l'API sera accessible à l'adresse `http://localhost:3000`. Il ne doit pas être lancé en même temps que le serveur de l'application.
 
 # Architecture
 
